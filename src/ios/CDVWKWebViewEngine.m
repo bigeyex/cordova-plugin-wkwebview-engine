@@ -35,6 +35,20 @@
 
 @end
 
+@interface CDVWKWebview : WKWebView
+
+@end
+
+
+@implementation CDVWKWebview
+
+- (UIEdgeInsets)safeAreaInsets {
+    return UIEdgeInsetsZero;
+}
+
+@end
+
+
 
 @interface CDVWKWebViewEngine ()
 
@@ -59,7 +73,7 @@
             return nil;
         }
 
-        self.engineWebView = [[WKWebView alloc] initWithFrame:frame];
+        self.engineWebView = [[CDVWKWebview alloc] initWithFrame:frame];
     }
 
     return self;
@@ -96,7 +110,7 @@
     configuration.userContentController = userContentController;
 
     // re-create WKWebView, since we need to update configuration
-    WKWebView* wkWebView = [[WKWebView alloc] initWithFrame:self.engineWebView.frame configuration:configuration];
+    WKWebView* wkWebView = [[CDVWKWebview alloc] initWithFrame:self.engineWebView.frame configuration:configuration];
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110000
     if (@available(iOS 11.0, *)) {
